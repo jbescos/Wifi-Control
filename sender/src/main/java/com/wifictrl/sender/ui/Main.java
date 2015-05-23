@@ -27,111 +27,44 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */ 
+ */
 
 package com.wifictrl.sender.ui;
 
 /*
-* MouseEventDemo.java
-*/
+ * MouseEventDemo.java
+ */
 
-import java.awt.Color;
+import java.awt.AWTEvent;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.MouseInfo;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.Toolkit;
+import java.awt.event.AWTEventListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@SuppressWarnings("serial")
-public class Main extends JPanel implements MouseListener {
-	
+public class Main {
+
 	private final static Logger log = LogManager.getLogger();
-	private final static BlankArea blankArea = new BlankArea(Color.YELLOW);
-    
-    public static void main(String[] args) {
-        /* Use an appropriate Look and Feel */
-        try {
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        } catch (Exception ex) {
-            log.error("Unexpected error", ex);
+
+	public static void main(String[] args) {
+		Toolkit.getDefaultToolkit().addAWTEventListener(new Listener(), AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.KEY_EVENT_MASK );
+		JFrame frame = new JFrame("Sender: Keep this windows open to send events");
+		
+		frame.setVisible(true);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+//		frame.setSize(new Dimension(500, 500));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+
+	private static class Listener implements AWTEventListener {
+        public void eventDispatched(AWTEvent event) {
+//            log.debug(MouseInfo.getPointerInfo().getLocation() + " | ");
+            log.debug(event);
         }
-        /* Turn off metal's use of bold fonts */
-        UIManager.put("swing.boldMetal", Boolean.FALSE);
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
-    
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event dispatch thread.
-     */
-    private static void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("MouseEventDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        //Create and set up the content pane.
-        JComponent newContentPane = new Main();
-        newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(newContentPane);
-        
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-        // TODO MouseInfo.getPointerInfo().getLocation().
-    }
-    
-    public Main() {
-        super(new GridLayout(0,1));
-        add(blankArea);
-        blankArea.addMouseListener(this);
-        addMouseListener(this);
-        setPreferredSize(new Dimension(450, 450));
-        setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
-    }
-    
-    void eventOutput(String eventDescription, MouseEvent e) {
-    	log.debug(eventDescription);
-    }
-    
-    public void mousePressed(MouseEvent e) {
-        eventOutput("Mouse pressed (# of clicks: "
-                + e.getClickCount() + ")", e);
-    }
-    
-    public void mouseReleased(MouseEvent e) {
-        eventOutput("Mouse released (# of clicks: "
-                + e.getClickCount() + ")", e);
-    }
-    
-    public void mouseEntered(MouseEvent e) {
-        eventOutput("Mouse entered", e);
-    }
-    
-    public void mouseExited(MouseEvent e) {
-        eventOutput("Mouse exited", e);
-    }
-    
-    public void mouseClicked(MouseEvent e) {
-        eventOutput("Mouse clicked (# of clicks: "
-                + e.getClickCount() + ")", e);
     }
 }
