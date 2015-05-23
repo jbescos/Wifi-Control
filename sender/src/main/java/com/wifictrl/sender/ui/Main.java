@@ -35,20 +35,28 @@ package com.wifictrl.sender.ui;
 * MouseEventDemo.java
 */
 
-import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.MouseListener;
+import java.awt.GridLayout;
+import java.awt.MouseInfo;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings("serial")
-public class MouseEventDemo extends JPanel
-        implements MouseListener {
-    BlankArea blankArea;
-    JTextArea textArea;
-    static final String NEWLINE = System.getProperty("line.separator");
+public class Main extends JPanel implements MouseListener {
+	
+	private final static Logger log = LogManager.getLogger();
+	private final static BlankArea blankArea = new BlankArea(Color.YELLOW);
     
     public static void main(String[] args) {
         /* Use an appropriate Look and Feel */
@@ -56,14 +64,8 @@ public class MouseEventDemo extends JPanel
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
             UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        } catch (UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-        } catch (InstantiationException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            log.error("Unexpected error", ex);
         }
         /* Turn off metal's use of bold fonts */
         UIManager.put("swing.boldMetal", Boolean.FALSE);
@@ -87,28 +89,19 @@ public class MouseEventDemo extends JPanel
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         //Create and set up the content pane.
-        JComponent newContentPane = new MouseEventDemo();
+        JComponent newContentPane = new Main();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
         
         //Display the window.
         frame.pack();
         frame.setVisible(true);
+        // TODO MouseInfo.getPointerInfo().getLocation().
     }
     
-    public MouseEventDemo() {
+    public Main() {
         super(new GridLayout(0,1));
-        blankArea = new BlankArea(Color.YELLOW);
         add(blankArea);
-        textArea = new JTextArea();
-        textArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setVerticalScrollBarPolicy(
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setPreferredSize(new Dimension(200, 75));
-        add(scrollPane);
-        
-        //Register for mouse events on blankArea and the panel.
         blankArea.addMouseListener(this);
         addMouseListener(this);
         setPreferredSize(new Dimension(450, 450));
@@ -116,10 +109,7 @@ public class MouseEventDemo extends JPanel
     }
     
     void eventOutput(String eventDescription, MouseEvent e) {
-        textArea.append(eventDescription + " detected on "
-                + e.getComponent().getClass().getName()
-                + "." + NEWLINE);
-        textArea.setCaretPosition(textArea.getDocument().getLength());
+    	log.debug(eventDescription);
     }
     
     public void mousePressed(MouseEvent e) {
