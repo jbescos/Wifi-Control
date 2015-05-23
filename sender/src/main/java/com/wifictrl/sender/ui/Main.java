@@ -55,8 +55,8 @@ public class Main {
 		JFrame frame = new JFrame("Sender: Keep this windows open to send events");
 		
 		frame.setVisible(true);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-//		frame.setSize(new Dimension(500, 500));
+//		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.setSize(new Dimension(500, 500));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
