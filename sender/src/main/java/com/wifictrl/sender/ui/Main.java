@@ -37,14 +37,16 @@ package com.wifictrl.sender.ui;
 
 import java.awt.AWTEvent;
 import java.awt.Dimension;
-import java.awt.MouseInfo;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.wifictrl.sender.core.BufferSender;
 
 public class Main {
 
@@ -62,9 +64,22 @@ public class Main {
 	}
 
 	private static class Listener implements AWTEventListener {
+		
+		private final BufferSender sender;
+		
+		public Listener(){
+			try {
+				sender = new BufferSender();
+				sender.start();
+			} catch (IOException e) {
+				log.error("Error", e);
+				throw new RuntimeException("Error", e);
+			}
+		}
+		
         public void eventDispatched(AWTEvent event) {
-//            log.debug(MouseInfo.getPointerInfo().getLocation() + " | ");
             log.debug(event);
+//            sender.send(obj);
         }
     }
 }
