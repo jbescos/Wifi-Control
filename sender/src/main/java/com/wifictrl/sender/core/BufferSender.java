@@ -13,7 +13,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 public class BufferSender implements Sender{
 
-	private final List<Info> queue = new Vector<>();
+	private final List<Info<?>> queue = new Vector<>();
 	private volatile boolean flag;
 	private final ObjectMapper mapper = new ObjectMapper();
 	private final static Logger log = LogManager.getLogger();
@@ -51,7 +51,7 @@ public class BufferSender implements Sender{
 		});
 	}
 	
-	List<Info> getQueue(){
+	List<Info<?>> getQueue(){
 		return queue;
 	}
 	
@@ -70,7 +70,7 @@ public class BufferSender implements Sender{
 	}
 
 	@Override
-	public void send(Info obj) {
+	public <T> void send(Info<T> obj) {
 		queue.add(obj);
 	}
 	

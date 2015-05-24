@@ -20,7 +20,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import com.wifictrl.sender.core.Sender.Info;
+import com.wifictrl.sender.core.Info;
 
 public class BufferSenderTest {
 
@@ -40,7 +40,7 @@ public class BufferSenderTest {
 			@Override
 			public Void answer(InvocationOnMock invocation) throws Throwable {
 				byte[] content = (byte[]) invocation.getArguments()[0];
-				List<Info> sent = mapper.readValue(content, new TypeReference<List<Info>>() {});
+				List<Info<?>> sent = mapper.readValue(content, new TypeReference<List<Info<?>>>() {});
 				elementsSent = elementsSent + sent.size();
 				return null;
 			}
@@ -50,7 +50,7 @@ public class BufferSenderTest {
 	@Test
 	public void concurrence() throws IOException, InterruptedException{
 		sender.start();
-		Info info = new Info();
+		Info<?> info = new Info<>();
 		final int TASKS = 1000;
 		for(int i=0; i<TASKS ;i++){
 			sender.send(info);
