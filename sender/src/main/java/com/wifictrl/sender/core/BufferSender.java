@@ -11,6 +11,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.wifictrl.common.core.Info;
+
 public class BufferSender implements Sender{
 
 	private final List<Info<?>> queue = new Vector<>();

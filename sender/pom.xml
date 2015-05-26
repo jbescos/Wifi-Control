@@ -9,13 +9,6 @@
 	<artifactId>sender</artifactId>
 	<packaging>jar</packaging>
 	<groupId>es.tododev.sender</groupId>
-	<dependencies>
-		<dependency>
-			<groupId>es.tododev.common</groupId>
-			<artifactId>common</artifactId>
-			<version>1.0</version>
-		</dependency>
-	</dependencies>
 	<build>
 		<plugins>
 			<plugin>

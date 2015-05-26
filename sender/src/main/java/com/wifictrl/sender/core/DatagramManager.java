@@ -8,11 +8,12 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import com.wifictrl.common.core.Constants;
+
 public class DatagramManager implements Closeable{
 
 	private final DatagramSocket clientSocket;
 	private final String HOST = "localhost";
-	private final int PORT = 9876;
 	private final InetAddress address;
 	
 	public DatagramManager() throws SocketException, UnknownHostException{
@@ -21,7 +22,7 @@ public class DatagramManager implements Closeable{
 	}
 	
 	public void send(byte[] data) throws IOException{
-		DatagramPacket sendPacket = new DatagramPacket(data, data.length, address, PORT);
+		DatagramPacket sendPacket = new DatagramPacket(data, data.length, address, Constants.PORT);
 	    clientSocket.send(sendPacket); 
 	}
 	

@@ -1,4 +1,4 @@
-package com.wifictrl.sender.core;
+package com.wifictrl.common.core;
 
 public class Info<T> {
 	
@@ -26,30 +26,4 @@ public class Info<T> {
 		return "Info [action=" + action + ", data=" + data + "]";
 	}
 
-	public static class XnY {
-		private int x;
-		private int y;
-
-		public int getX() {
-			return x;
-		}
-
-		public void setX(int x) {
-			this.x = x;
-		}
-
-		public int getY() {
-			return y;
-		}
-
-		public void setY(int y) {
-			this.y = y;
-		}
-
-		@Override
-		public String toString() {
-			return "XnY [x=" + x + ", y=" + y + "]";
-		}
-		
-	}
 }

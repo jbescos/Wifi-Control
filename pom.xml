@@ -36,6 +36,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>es.tododev.common</groupId>
+			<artifactId>common</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>

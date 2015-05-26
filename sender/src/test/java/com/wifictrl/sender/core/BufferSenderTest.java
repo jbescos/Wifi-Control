@@ -20,7 +20,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import com.wifictrl.sender.core.Info;
+import com.wifictrl.common.core.Info;
 
 public class BufferSenderTest {
 

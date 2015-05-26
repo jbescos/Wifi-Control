@@ -17,10 +17,9 @@ import javax.swing.JFrame;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.wifictrl.common.core.Constants;
+import com.wifictrl.common.core.Info;
 import com.wifictrl.sender.core.BufferSender;
-import com.wifictrl.sender.core.Constants;
-import com.wifictrl.sender.core.Info;
-import com.wifictrl.sender.core.Info.XnY;
 
 public class Main {
 
@@ -85,10 +84,8 @@ public class Main {
 		}
         
         private void sendMove(MouseEvent event){
-			Info<XnY> info = new Info<>();
-			XnY xy = new XnY();
-			xy.setX(event.getX());
-			xy.setY(event.getY());
+			Info<Integer[]> info = new Info<>();
+			Integer[] xy = new Integer[]{event.getX(), event.getY()};
 			info.setAction(Constants.MOUSE_MOVE);
 			info.setData(xy);
 			sender.send(info);
