@@ -25,7 +25,7 @@ public class BufferSender implements Sender{
 	private long totalSent;
 	
 	public BufferSender() throws SocketException, UnknownHostException{
-		this(new DatagramManager(), 2L);
+		this(new DatagramManager(), 1L);
 	}
 	
 	public BufferSender(final DatagramManager manager, final long READ_MILLIS){

@@ -8,8 +8,8 @@ import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
-import com.wifictrl.common.core.Info;
 import com.wifictrl.common.core.Constants;
+import com.wifictrl.common.core.Info;
 
 public class BotHandler implements Handler{
 
@@ -22,7 +22,8 @@ public class BotHandler implements Handler{
 		log.debug("Recived: "+events);
 		for(Info<?> info : events){
 			if(Constants.MOUSE_MOVE.equals(info.getAction())){
-				Integer[] xny = (Integer[])info.getData();
+				@SuppressWarnings("unchecked")
+				List<Integer> xny = (List<Integer>)info.getData();
 			}else if(Constants.MOUSE_RELEASED.equals(info.getAction())){
 				Integer mouseButton = (Integer)info.getData();
 			}else if(Constants.KEY_RELEASED.equals(info.getAction())){

@@ -73,6 +73,7 @@ public class Main {
             	sendMove((MouseEvent) event);
                 break;
             default:
+            	log.debug("Uncatch event: "+event);
           }
         }
         
