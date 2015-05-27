@@ -1,5 +1,7 @@
 package com.wifictrl.receiver.core;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class BotHandler implements Handler{
 
 	private final ObjectMapper mapper = new ObjectMapper();
 	private final Logger log = LogManager.getLogger();
+	private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	@Override
 	public void handle(byte[] stream) throws IOException{
@@ -24,10 +27,13 @@ public class BotHandler implements Handler{
 			if(Constants.MOUSE_MOVE.equals(info.getAction())){
 				@SuppressWarnings("unchecked")
 				List<Integer> xny = (List<Integer>)info.getData();
+				log.debug(xny);
 			}else if(Constants.MOUSE_RELEASED.equals(info.getAction())){
 				Integer mouseButton = (Integer)info.getData();
 			}else if(Constants.KEY_RELEASED.equals(info.getAction())){
 				Integer keyCode = (Integer)info.getData();
+			}else if(Constants.MOUSE_WHEEL.equals(info.getAction())){
+				Integer scroll = (Integer)info.getData();
 			}else{
 				throw new RuntimeException(info.getAction()+" not supported in receiver");
 			}

@@ -4,6 +4,7 @@ public class Constants {
 
 	public final static String MOUSE_MOVE = "mouseMove";
 	public final static String MOUSE_RELEASED = "mouseReleased";
+	public final static String MOUSE_WHEEL = "mouseWheel";
 	public final static String KEY_RELEASED = "keyReleased";
 	
 	public final static int PORT = 9876;
