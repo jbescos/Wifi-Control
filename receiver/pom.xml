@@ -2,13 +2,25 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>es.tododev</groupId>
+		<groupId>com.wifictrl</groupId>
 		<artifactId>Wifi-Control</artifactId>
 		<version>1.0</version>
 	</parent>
 	<artifactId>receiver</artifactId>
 	<packaging>jar</packaging>
-	<groupId>es.tododev.receiver</groupId>
+	<groupId>com.wifictrl.receiver</groupId>
+	<dependencies>
+		<dependency>
+			<groupId>com.wifictrl.common</groupId>
+			<artifactId>common</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<artifactId>sender</artifactId>
+			<groupId>com.wifictrl.sender</groupId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
@@ -24,17 +36,7 @@
 							<mainClass>com.wifictrl.receiver.core.Main</mainClass>
 						</manifest>
 					</archive>
-
 				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
