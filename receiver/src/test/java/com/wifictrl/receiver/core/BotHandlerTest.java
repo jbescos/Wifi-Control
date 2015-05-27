@@ -38,8 +38,14 @@ public class BotHandlerTest {
 	public void before(){
 		MockitoAnnotations.initMocks(this);
 		dataSample = new ArrayList<Info<?>>();
-		dataSample.add(new Info<>());
-		dataSample.add(new Info<>());
+		Info<Integer[]> i1 = new Info<>();
+		i1.setAction("test1");
+		i1.setData(new Integer[]{45,78,564,7876,334});
+		dataSample.add(i1);
+		Info<String> i2 = new Info<>();
+		i2.setAction("test2");
+		i2.setData("any content");
+		dataSample.add(i2);
 	}
 	
 	@Test
@@ -53,15 +59,15 @@ public class BotHandlerTest {
 			@Override
 			public Void answer(InvocationOnMock invocation) throws Throwable {
 				byte[] received = (byte[]) invocation.getArguments()[0];
+				log.debug("Received: "+Arrays.toString(received));
 				Arrays.equals(data, received);
 				List<Info<?>> fromJson = mapper.readValue(received, new TypeReference<List<Info<?>>>() {});
 				Arrays.equals(dataSample.toArray(new Info<?>[0]), fromJson.toArray(new Info<?>[0]));
 				actions.countDown();
-				log.debug("Received");
 				return null;
 			}
 		}).when(handler).handle((byte[]) anyObject());
-		new Thread(new Receiver(handler)).start();
+		new Thread(new Receiver(handler), "test-thread").start();
 		try(DatagramManager manager = new DatagramManager();){
 			for(int i=0;i<ACTIONS;i++){
 				manager.send(data);
