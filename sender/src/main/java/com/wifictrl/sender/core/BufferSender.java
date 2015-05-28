@@ -24,8 +24,8 @@ public class BufferSender implements Sender{
 	private CountDownLatch latch;
 	private long totalSent;
 	
-	public BufferSender() throws SocketException, UnknownHostException{
-		this(new DatagramManager(), 1L);
+	public BufferSender(String host) throws SocketException, UnknownHostException{
+		this(new DatagramManager(host), 1L);
 	}
 	
 	public BufferSender(final DatagramManager manager, final long READ_MILLIS){

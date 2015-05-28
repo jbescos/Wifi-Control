@@ -13,12 +13,11 @@ import com.wifictrl.common.core.Constants;
 public class DatagramManager implements Closeable{
 
 	private final DatagramSocket clientSocket;
-	private final String HOST = "localhost";
 	private final InetAddress address;
 	
-	public DatagramManager() throws SocketException, UnknownHostException{
+	public DatagramManager(String host) throws SocketException, UnknownHostException{
 		clientSocket = new DatagramSocket(); 
-		address = InetAddress.getByName(HOST);
+		address = InetAddress.getByName(host);
 	}
 	
 	public void send(byte[] data) throws IOException{

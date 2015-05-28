@@ -68,7 +68,7 @@ public class BotHandlerTest {
 			}
 		}).when(handler).handle((byte[]) anyObject());
 		new Thread(new Receiver(handler), "test-thread").start();
-		try(DatagramManager manager = new DatagramManager();){
+		try(DatagramManager manager = new DatagramManager("localhost");){
 			for(int i=0;i<ACTIONS;i++){
 				manager.send(data);
 				log.debug("Sended");

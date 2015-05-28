@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 
@@ -27,7 +28,8 @@ public class Main {
 	private final static Logger log = LogManager.getLogger();
 
 	public static void main(String[] args) throws SocketException, UnknownHostException {
-		final BufferSender sender = new BufferSender();
+		log.info("Args "+Arrays.toString(args));
+		final BufferSender sender = new BufferSender(args[0]);
 		JFrame frame = new JFrame("Sender: Keep this window open to send events");
 		Toolkit.getDefaultToolkit().addAWTEventListener(new Listener(sender, frame), AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.KEY_EVENT_MASK | AWTEvent.MOUSE_WHEEL_EVENT_MASK );
 			
