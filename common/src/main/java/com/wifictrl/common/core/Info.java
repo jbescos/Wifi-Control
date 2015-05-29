@@ -2,14 +2,14 @@ package com.wifictrl.common.core;
 
 public class Info<T> {
 	
-	private String action;
+	private int action;
 	private T data;
 
-	public String getAction() {
+	public int getAction() {
 		return action;
 	}
 
-	public void setAction(String action) {
+	public void setAction(int action) {
 		this.action = action;
 	}
 

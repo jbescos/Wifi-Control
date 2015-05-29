@@ -31,19 +31,22 @@ public class BotHandler implements Handler{
 		List<Info<?>> events = mapper.readValue(stream, new TypeReference<List<Info<?>>>() {});
 		log.debug("Recived: "+events);
 		for(Info<?> info : events){
-			if(Constants.MOUSE_MOVE.equals(info.getAction())){
+			if(Constants.MOUSE_MOVE == info.getAction()){
 				@SuppressWarnings("unchecked")
 				List<Integer> xny = (List<Integer>)info.getData();
 				int x = actualPosition(screenSize.width, xny.get(2), xny.get(0));
 				int y = actualPosition(screenSize.height, xny.get(3), xny.get(1));
 				bot.mouseMove(x, y);
-			}else if(Constants.MOUSE_RELEASED.equals(info.getAction())){
+			}else if(Constants.MOUSE_RELEASED == info.getAction()){
 				Integer mouseButton = (Integer)info.getData();
 				bot.mouseRelease(mouseButton);
-			}else if(Constants.KEY_RELEASED.equals(info.getAction())){
+			}else if(Constants.MOUSE_PRESSED == info.getAction()){
+				Integer mouseButton = (Integer)info.getData();
+				bot.mousePress(mouseButton);
+			}else if(Constants.KEY_RELEASED == info.getAction()){
 				Integer keyCode = (Integer)info.getData();
 				bot.keyRelease(keyCode);
-			}else if(Constants.MOUSE_WHEEL.equals(info.getAction())){
+			}else if(Constants.MOUSE_WHEEL == info.getAction()){
 				Integer scroll = (Integer)info.getData();
 				bot.mouseWheel(scroll);
 			}else{

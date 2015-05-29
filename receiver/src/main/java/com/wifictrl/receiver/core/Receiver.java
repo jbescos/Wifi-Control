@@ -1,6 +1,5 @@
 package com.wifictrl.receiver.core;
 
-import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
@@ -28,7 +27,7 @@ public class Receiver implements Runnable{
 	            try {
 					serverSocket.receive(receivePacket);
 					handler.handle(receivePacket.getData());
-				} catch (IOException e) {
+				} catch (Exception e) {
 					log.error("Can not receive", e);
 				}
 			}

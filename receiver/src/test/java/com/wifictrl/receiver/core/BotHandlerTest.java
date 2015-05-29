@@ -39,11 +39,11 @@ public class BotHandlerTest {
 		MockitoAnnotations.initMocks(this);
 		dataSample = new ArrayList<Info<?>>();
 		Info<Integer[]> i1 = new Info<>();
-		i1.setAction("test1");
+		i1.setAction(1);
 		i1.setData(new Integer[]{45,78,564,7876,334});
 		dataSample.add(i1);
 		Info<String> i2 = new Info<>();
-		i2.setAction("test2");
+		i2.setAction(2);
 		i2.setData("any content");
 		dataSample.add(i2);
 	}
