@@ -46,6 +46,9 @@ public class BotHandler implements Handler{
 			}else if(Constants.KEY_RELEASED == info.getAction()){
 				Integer keyCode = (Integer)info.getData();
 				bot.keyRelease(keyCode);
+			}else if(Constants.KEY_PRESSED == info.getAction()){
+				Integer keyCode = (Integer)info.getData();
+				bot.keyPress(keyCode);
 			}else if(Constants.MOUSE_WHEEL == info.getAction()){
 				Integer scroll = (Integer)info.getData();
 				bot.mouseWheel(scroll);

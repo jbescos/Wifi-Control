@@ -1,6 +1,7 @@
 package com.wifictrl.sender.ui;
 
 import java.awt.AWTEvent;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
@@ -31,26 +32,26 @@ public class Main {
 		log.info("Args "+Arrays.toString(args));
 		final InmediateSender sender = new InmediateSender(args[0]);
 		JFrame frame = new JFrame("Sender: Keep this window open to send events");
+		frame.pack();
 		frame.setSize(new Dimension(500, 500));
-		Toolkit.getDefaultToolkit().addAWTEventListener(new Listener(sender, frame.getSize()), AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.KEY_EVENT_MASK | AWTEvent.MOUSE_WHEEL_EVENT_MASK );
-		frame.setVisible(true);
 //		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		frame.setSize(new Dimension(500, 500));
+		frame.setVisible(true);
 		frame.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
             	log.info("Exiting program");
             	System.exit(0);
             }
         });
-		frame.setVisible(true);
+		Toolkit.getDefaultToolkit().addAWTEventListener(new Listener(sender, frame.getContentPane()), AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.KEY_EVENT_MASK | AWTEvent.MOUSE_WHEEL_EVENT_MASK );
 	}
 
 	private static class Listener implements AWTEventListener {
 		
 		private final InmediateSender sender;
-		private final Dimension frame;
+		private final Component frame;
+		private final int Y_CORRECTOR = -30;
 		
-		public Listener(InmediateSender sender, Dimension frame){
+		public Listener(InmediateSender sender, Component frame){
 			this.sender = sender;
 			this.frame = frame;
 			log.debug("Size: "+frame.getWidth()+"x"+frame.getWidth());	
@@ -67,14 +68,14 @@ public class Main {
             case MouseEvent.MOUSE_RELEASED:
             	sendReleased((MouseEvent) event, Constants.MOUSE_RELEASED);
             	break;
-            case MouseEvent.MOUSE_CLICKED:
-            	sendReleased((MouseEvent) event, Constants.MOUSE_CLICKED);
-            	break;
             case MouseEvent.MOUSE_PRESSED:
             	sendReleased((MouseEvent) event, Constants.MOUSE_PRESSED);
             	break;
+            case MouseEvent.MOUSE_DRAGGED:
+            	sendMove((MouseEvent) event, Constants.MOUSE_MOVE);
+            	break;
             case MouseEvent.MOUSE_MOVED:
-            	sendMove((MouseEvent) event);
+            	sendMove((MouseEvent) event, Constants.MOUSE_MOVE);
                 break;
             case MouseEvent.MOUSE_WHEEL:
             	sendWheel((MouseWheelEvent) event);
@@ -91,10 +92,10 @@ public class Main {
 			sender.send(info);
 		}
         
-        private void sendMove(MouseEvent event){
+        private void sendMove(MouseEvent event, int action){
 			Info<Integer[]> info = new Info<>();
-			Integer[] xy = new Integer[]{event.getX(), event.getY(), frame.getSize().width, frame.getSize().height};
-			info.setAction(Constants.MOUSE_MOVE);
+			Integer[] xy = new Integer[]{event.getX(), event.getY()+Y_CORRECTOR, frame.getSize().width, frame.getSize().height};
+			info.setAction(action);
 			info.setData(xy);
 			sender.send(info);
 		}
