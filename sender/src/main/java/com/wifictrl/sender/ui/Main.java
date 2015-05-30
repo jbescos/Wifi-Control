@@ -50,6 +50,8 @@ public class Main {
 		private final InmediateSender sender;
 		private final Component frame;
 		private final int Y_CORRECTOR = -30;
+		private final int X_CORRECTOR = -3;
+		private final int QUIT_BORDERS = 5;
 		
 		public Listener(InmediateSender sender, Component frame){
 			this.sender = sender;
@@ -94,7 +96,7 @@ public class Main {
         
         private void sendMove(MouseEvent event, int action){
 			Info<Integer[]> info = new Info<>();
-			Integer[] xy = new Integer[]{event.getX(), event.getY()+Y_CORRECTOR, frame.getSize().width, frame.getSize().height};
+			Integer[] xy = new Integer[]{event.getX()+X_CORRECTOR, event.getY()+Y_CORRECTOR, frame.getSize().width-QUIT_BORDERS, frame.getSize().height-QUIT_BORDERS};
 			info.setAction(action);
 			info.setData(xy);
 			sender.send(info);
