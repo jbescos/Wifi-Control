@@ -1,8 +1,8 @@
 package com.wifictrl.sender.ui;
 
 import java.awt.AWTEvent;
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
 import java.awt.event.InputEvent;
@@ -16,6 +16,8 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,32 +33,40 @@ public class Main {
 	public static void main(String[] args) throws SocketException, UnknownHostException {
 		log.info("Args "+Arrays.toString(args));
 		final InmediateSender sender = new InmediateSender(args[0]);
-		JFrame frame = new JFrame("Sender: Keep this window open to send events");
-		frame.pack();
-		frame.setSize(new Dimension(500, 500));
-//		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		frame.setVisible(true);
+		JFrame frame = new JFrame();
+		frame.setUndecorated(true);
+		frame.setResizable(false);
+		JLabel text = new JLabel("", SwingConstants.CENTER);
+		frame.add(new JLabel("Press ALT+Tab to change screen and ALT+F4 to close it.", SwingConstants.CENTER), BorderLayout.CENTER);
+		frame.add(text, BorderLayout.NORTH);
+		frame.validate();
+ 
+ 		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
+		
 		frame.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
             	log.info("Exiting program");
             	System.exit(0);
             }
         });
-		Toolkit.getDefaultToolkit().addAWTEventListener(new Listener(sender, frame.getContentPane()), AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.KEY_EVENT_MASK | AWTEvent.MOUSE_WHEEL_EVENT_MASK );
+		Toolkit.getDefaultToolkit().addAWTEventListener(new Listener(sender, frame.getWidth(), frame.getHeight(), text), AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.KEY_EVENT_MASK | AWTEvent.MOUSE_WHEEL_EVENT_MASK );
 	}
 
 	private static class Listener implements AWTEventListener {
 		
 		private final InmediateSender sender;
-		private final Component frame;
-		private final int Y_CORRECTOR = -30;
-		private final int X_CORRECTOR = -3;
-		private final int QUIT_BORDERS = 5;
+		private final JLabel text;
+		private final int width;
+		private final int height;
+		private final int HEIGHT_FIX = 26;
+		private final int WIDTH_FIX = 1;
 		
-		public Listener(InmediateSender sender, Component frame){
+		public Listener(InmediateSender sender, int width, int height, JLabel text){
 			this.sender = sender;
-			this.frame = frame;
-			log.debug("Size: "+frame.getWidth()+"x"+frame.getWidth());	
+			this.text = text;
+			this.width = width - WIDTH_FIX;
+			this.height = height - HEIGHT_FIX;
+			log.debug("Size: "+this.width+"x"+this.height);	
 		}
 		
         public void eventDispatched(AWTEvent event) {
@@ -92,14 +102,16 @@ public class Main {
 			info.setAction(action);
 			info.setData(event.getKeyCode());
 			sender.send(info);
+			text.setText("Key: "+event.getKeyChar());
 		}
         
         private void sendMove(MouseEvent event, int action){
 			Info<Integer[]> info = new Info<>();
-			Integer[] xy = new Integer[]{event.getX()+X_CORRECTOR, event.getY()+Y_CORRECTOR, frame.getSize().width-QUIT_BORDERS, frame.getSize().height-QUIT_BORDERS};
+			Integer[] xy = new Integer[]{event.getX(), event.getY(), width, height};
 			info.setAction(action);
 			info.setData(xy);
 			sender.send(info);
+			text.setText("Move: ("+xy[0]+","+xy[1]+")");
 		}
         
         private void sendWheel(MouseWheelEvent event) {
@@ -107,6 +119,7 @@ public class Main {
 			info.setAction(Constants.MOUSE_WHEEL);
 			info.setData(event.getWheelRotation());
 			sender.send(info);
+			text.setText("Wheel: "+event.getWheelRotation());
 		}
 
 		private void sendReleased(MouseEvent event, int action) {
@@ -122,6 +135,7 @@ public class Main {
 			}
 			info.setData(botButton);
 			sender.send(info);
+			text.setText("Button: "+botButton);
 		}
     }
 }
