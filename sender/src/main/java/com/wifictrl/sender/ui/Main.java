@@ -60,6 +60,7 @@ public class Main {
 		private final int height;
 		private final int HEIGHT_FIX = 26;
 		private final int WIDTH_FIX = 1;
+		private final int BANNED[] = new int[]{18};
 		
 		public Listener(InmediateSender sender, int width, int height, JLabel text){
 			this.sender = sender;
@@ -98,11 +99,13 @@ public class Main {
         }
         
         private void sendKey(KeyEvent event, int action){
-			Info<Integer> info = new Info<>();
-			info.setAction(action);
-			info.setData(event.getKeyCode());
-			sender.send(info);
-			text.setText("Key: "+event.getKeyChar());
+        	if(BANNED[0] != event.getKeyCode()){
+        		Info<Integer> info = new Info<>();
+    			info.setAction(action);
+    			info.setData(event.getKeyCode());
+    			sender.send(info);
+    			text.setText("Key: "+event.getKeyChar());
+        	}
 		}
         
         private void sendMove(MouseEvent event, int action){
