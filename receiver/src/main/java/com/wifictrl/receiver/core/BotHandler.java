@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,9 +28,10 @@ public class BotHandler implements Handler{
 	public void handle(byte[] stream) throws IOException, ClassNotFoundException{
 		Info<?> info = SerializeData.toObject(stream);
 		if(Constants.MOUSE_MOVE == info.getAction()){
-			Integer[] xny = (Integer[]) info.getData();
-			int x = actualPosition(screenSize.width, xny[2], xny[0]);
-			int y = actualPosition(screenSize.height, xny[3], xny[1]);
+			@SuppressWarnings("unchecked")
+			List<Integer> xny = (List<Integer>) info.getData();
+			int x = actualPosition(screenSize.width, xny.get(2), xny.get(0));
+			int y = actualPosition(screenSize.height, xny.get(3), xny.get(1));
 			log.debug("Mouse move ("+x+","+y+")");
 			bot.mouseMove(x, y);
 		}else if(Constants.MOUSE_RELEASED == info.getAction()){
