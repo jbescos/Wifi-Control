@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.wifictrl</groupId>
 		<artifactId>Wifi-Control</artifactId>
-		<version>1.0</version>
+		<version>1.1</version>
 	</parent>
 	<artifactId>sender</artifactId>
 	<packaging>jar</packaging>
@@ -14,7 +14,7 @@
 		<dependency>
 			<groupId>com.wifictrl.common</groupId>
 			<artifactId>common</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 		</dependency>
 	</dependencies>
 	<build>

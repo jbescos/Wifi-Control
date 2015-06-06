@@ -11,6 +11,6 @@ public class Constants {
 	public final static int MOUSE_DRAGGED = 7;
 	
 	public final static int PORT = 9876;
-	public final static int PACKET_SIZE = 1024;
+	public final static int PACKET_SIZE = 512;
 	
 }
