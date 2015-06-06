@@ -24,11 +24,13 @@ public class Receiver implements Runnable{
 			byte[] receiveData = new byte[Constants.PACKET_SIZE];
 			while(true){
 				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+				byte[] data = null;
 	            try {
 					serverSocket.receive(receivePacket);
-					handler.handle(receivePacket.getData());
+					data = receivePacket.getData();
+					handler.handle(data);
 				} catch (Exception e) {
-					log.error("Can not receive", e);
+					log.error("Can not proccess: "+data, e);
 				}
 			}
 		} catch (SocketException e) {

@@ -25,7 +25,7 @@ public class BotHandler implements Handler{
 	}
 	
 	@Override
-	public void handle(byte[] stream) throws IOException, ClassNotFoundException{
+	public void handle(byte[] stream) throws IOException{
 		Info<?> info = SerializeData.toObject(stream, Info.class);
 		if(Constants.MOUSE_MOVE == info.getAction()){
 			@SuppressWarnings("unchecked")

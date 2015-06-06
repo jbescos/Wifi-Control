@@ -4,6 +4,6 @@ import java.io.IOException;
 
 public interface Handler {
 
-	void handle(byte[] stream) throws IOException, ClassNotFoundException;
+	void handle(byte[] stream) throws IOException;
 	
 }

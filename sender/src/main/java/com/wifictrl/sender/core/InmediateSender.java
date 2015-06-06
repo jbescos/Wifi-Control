@@ -3,6 +3,7 @@ package com.wifictrl.sender.core;
 import java.io.Serializable;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +27,9 @@ public class InmediateSender implements Sender{
 	@Override
 	public <T extends Serializable> void send(Info<T> obj) {
 		try{
-			manager.send(SerializeData.toBytes(obj));
+			byte[] data = SerializeData.toBytes(obj);
+			log.debug("Sending: "+Arrays.toString(data));
+			manager.send(data);
 		} catch (Exception e) {
 			log.error("Error converting a json", e);
 		}
