@@ -1,10 +1,8 @@
 package com.wifictrl.common.core;
 
-import java.io.Serializable;
 
-public class Info<T extends Serializable> implements Serializable {
+public class Info<T>{
 
-	private static final long serialVersionUID = -1439849130918355030L;
 	private int action;
 	private T data;
 
