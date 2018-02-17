@@ -17,8 +17,8 @@ import com.wifictrl.common.core.SerializeData;
 public class BotHandler implements Handler{
 	
 	private final Logger log = LogManager.getLogger();
-	private final int WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width -1;
-	private final int HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height -1;
+	private final int WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
+	private final int HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
 	private final Robot bot;
 	
 	public BotHandler() throws AWTException{
@@ -61,7 +61,7 @@ public class BotHandler implements Handler{
 	}
 	
 	private int actualPosition(int actualSize, int foreignSize, int foreignPosition){
-		return foreignPosition * actualSize / foreignSize;
+		return (foreignPosition * actualSize / foreignSize) + 1;
 	}
 
 }
