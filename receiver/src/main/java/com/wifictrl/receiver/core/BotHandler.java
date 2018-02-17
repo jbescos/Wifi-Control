@@ -17,7 +17,8 @@ import com.wifictrl.common.core.SerializeData;
 public class BotHandler implements Handler{
 	
 	private final Logger log = LogManager.getLogger();
-	private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private final int WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width -1;
+	private final int HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height -1;
 	private final Robot bot;
 	
 	public BotHandler() throws AWTException{
@@ -30,8 +31,8 @@ public class BotHandler implements Handler{
 		if(Constants.MOUSE_MOVE == info.getAction()){
 			@SuppressWarnings("unchecked")
 			List<Integer> xny = (List<Integer>) info.getData();
-			int x = actualPosition(screenSize.width, xny.get(2), xny.get(0));
-			int y = actualPosition(screenSize.height, xny.get(3), xny.get(1));
+			int x = actualPosition(WIDTH, xny.get(2), xny.get(0));
+			int y = actualPosition(HEIGHT, xny.get(3), xny.get(1));
 			log.debug("Mouse move ("+x+","+y+")");
 			bot.mouseMove(x, y);
 		}else if(Constants.MOUSE_RELEASED == info.getAction()){

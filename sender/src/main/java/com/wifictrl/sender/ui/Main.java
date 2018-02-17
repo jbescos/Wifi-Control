@@ -40,6 +40,7 @@ public class Main {
 		frame.add(new JLabel("Press ALT+Tab to change screen and ALT+F4 to close it.", SwingConstants.CENTER), BorderLayout.CENTER);
 		frame.add(text, BorderLayout.NORTH);
 		frame.validate();
+		frame.pack();
  
  		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
 		
@@ -49,7 +50,7 @@ public class Main {
             	System.exit(0);
             }
         });
-		Toolkit.getDefaultToolkit().addAWTEventListener(new Listener(sender, frame.getWidth(), frame.getHeight(), text), AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.KEY_EVENT_MASK | AWTEvent.MOUSE_WHEEL_EVENT_MASK );
+		Toolkit.getDefaultToolkit().addAWTEventListener(new Listener(sender, frame.getContentPane().getWidth(), frame.getContentPane().getHeight(), text), AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.KEY_EVENT_MASK | AWTEvent.MOUSE_WHEEL_EVENT_MASK );
 	}
 
 	private static class Listener implements AWTEventListener {
@@ -58,15 +59,13 @@ public class Main {
 		private final JLabel text;
 		private final int width;
 		private final int height;
-		private final int HEIGHT_FIX = 26;
-		private final int WIDTH_FIX = 1;
 		private final int BANNED[] = new int[]{18};
 		
 		public Listener(InmediateSender sender, int width, int height, JLabel text){
 			this.sender = sender;
 			this.text = text;
-			this.width = width - WIDTH_FIX;
-			this.height = height - HEIGHT_FIX;
+			this.width = width;
+			this.height = height;
 			log.debug("Size: "+this.width+"x"+this.height);	
 		}
 		
